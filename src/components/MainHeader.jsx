@@ -5,10 +5,10 @@ const MainHeader = () => {
     return (
         <View style={{backgroundColor: '#FFF'}}>
             <Text style={styles.textHeader}>
-                Lista de usuarios
+                Lista de empleados
             </Text>
             <Text style={[styles.textHeader, { fontSize: 14, fontWeight: '400' }]}>
-                Lista de usuarios registrados en WineAdvisor
+                Lista de empleados registrados en WineAdvisor
             </Text>
         </View>
     );

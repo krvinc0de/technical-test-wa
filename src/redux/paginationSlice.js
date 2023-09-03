@@ -13,7 +13,7 @@ export const paginationSlice = createSlice({
             state.page += 1
         },
         decrement: (state) => {
-            state.page -= 1
+            state.page = (state.page <= 1) ? 1 : (state.page -= 1)
         },
         setTotalPage: (state, action) => {
             state.totalPage = action.payload
@@ -21,6 +21,6 @@ export const paginationSlice = createSlice({
     }
 })
 
-export const { increment, decrement } = paginationSlice.actions
+export const { increment, decrement, setTotalPage } = paginationSlice.actions
 
 export default paginationSlice.reducer

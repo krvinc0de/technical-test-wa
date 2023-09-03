@@ -6,22 +6,26 @@ import UserItem from '../components/UserItem';
 import SeparatorComponent from '../components/SeparatorComponent';
 import LoadingComponent from '../components/LoadingComponent';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PageSelector from '../components/PageSelector';
+import { setTotalPage } from '../redux/paginationSlice';
+import TotalPages from '../components/TotalPages';
 
 const MainScreen = () => {
 
-    const [usersData, setUsersData] = useState([]);
+    const dispatch = useDispatch();
+    const pageRender = useSelector(state => state.pagination.page);
 
-    const pageRender = useSelector(state => state.pagination.value)
+    const [usersData, setUsersData] = useState([]);
 
     useEffect(() => {
         getAllUsers(pageRender).then(response => {
             setUsersData(response.data.data);
+            dispatch(setTotalPage(response.data.total_pages));
         }).catch(err => {
             console.log(err);
         })
-    }, []);
+    }, [pageRender]);
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -29,6 +33,7 @@ const MainScreen = () => {
                 <View style={styles.header}>
                     <MainHeader />
                 </View>
+                <TotalPages />
                 <View style={styles.listContainer}>
                     <FlatList
                         ListEmptyComponent={() => <LoadingComponent />}
@@ -53,7 +58,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFF',
-        gap: 10
+        gap: 5
     },
     header: {
         maxHeight: 100,
